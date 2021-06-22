@@ -2,10 +2,12 @@ package model;
 
 public class Produto {
 	private Long id;
+	private String description;
+	private String imageUri;
 	private String name;
 	private Double price;
-	private String imageUri;
-	private String description;
+	
+	
 	
 	public Produto() {
 
@@ -50,12 +52,5 @@ public class Produto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	@Override
-	public String toString() {
-		return "Produto [id=" + id + ", name=" + name + ", price=" + price + ", imageUri=" + imageUri + ", description="
-				+ description + "]";
-	}
-	
 	
 }

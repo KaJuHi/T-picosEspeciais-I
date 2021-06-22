@@ -9,6 +9,7 @@ import java.util.List;
 
 import database.ConnectionFactory;
 import model.Produto;
+import services.ServiceProduct;
 
 public class MainJava {
 
@@ -16,15 +17,25 @@ public class MainJava {
 
 		PreparedStatement stmt;
 		Connection conn = ConnectionFactory.getConnection();
+		ServiceProduct service = new ServiceProduct();
 		
-		stmt = conn.prepareStatement("SELECT * FROM tb_product");
-		ResultSet result = stmt.executeQuery();
+		List<Produto> produtos = new ArrayList<Produto>();
 		
-		while(result.next()) {
+		try {
+			stmt = conn.prepareStatement("SELECT * FROM tb_product");
+			ResultSet resultado = stmt.executeQuery();
 			
+			while (resultado.next()) {
+				Produto produto = service.instanciarProduto(resultado);
+				produtos.add(produto);
+			}
 			
-			System.out.println("Id: " + result.getLong("id") + " | Nome: " + result.getString("name") +
-					" | Descrição: " + result.getString("description") + " | Preço: " + result.getDouble("price") + " | " + result.getString("image_uri"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		for (Produto produto : produtos) {
+			System.out.println(produto);
 		}
 		
 	}
